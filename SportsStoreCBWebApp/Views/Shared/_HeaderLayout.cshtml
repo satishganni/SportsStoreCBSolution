@@ -1,0 +1,13 @@
+﻿<nav class="navbar fixed-top navbar-dark bg-purple navbar-expand-md text-light">
+  <a class="navbar-brand ml-1" asp-controller="Product" asp-action="List">Sports Store</a>
+  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navigationContext">
+    <img src="~/lib/bootstrap/icons/chevron-down.svg" height="32" width="32" />
+  </button>
+  <div id="navigationContext" class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+      <li><a class="nav-link" asp-controller="Home" asp-action="About">About</a></li>
+      <li><a class="nav-link" asp-controller="Home" asp-action="Contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>

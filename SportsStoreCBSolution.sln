@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30517.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportsStoreCBWebApp", "SportsStoreCBWebApp\SportsStoreCBWebApp.csproj", "{CC0726CE-C8A1-414D-9281-8D11493A3EAB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C94E6E6D-3669-400E-B38B-67396B872B8E}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC0726CE-C8A1-414D-9281-8D11493A3EAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC0726CE-C8A1-414D-9281-8D11493A3EAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC0726CE-C8A1-414D-9281-8D11493A3EAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC0726CE-C8A1-414D-9281-8D11493A3EAB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {43C0B98C-48B4-43D2-923E-343419E5CA2C}
+	EndGlobalSection
+EndGlobal

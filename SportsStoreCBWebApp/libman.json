@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "defaultDestination": "wwwroot/lib",
+  "libraries": [
+    {
+      "provider": "filesystem",
+      "destination": "wwwroot/lib/bootstrap/css",
+      "library": "Assets/bootstrap-5.0.0-alpha1-dist/css/",
+      "files": [ "bootstrap.min.css" ]
+    },
+    {
+      "provider": "filesystem",
+      "destination": "wwwroot/lib/bootstrap/js",
+      "library": "Assets/bootstrap-5.0.0-alpha1-dist/js/",
+      "files": [ "bootstrap.bundle.min.js" ]
+    },
+    {
+      "provider": "filesystem",
+      "destination": "wwwroot/lib/bootstrap/icons",
+      "library": "Assets/bootstrap-icons-1.0.0/",
+      "files": [ "chevron-down.svg", "cart-check-fill.svg", "list.svg", "check-square-fill.svg", "check-square.svg", "caret-down-fill.svg", "caret-down-square-fill.svg", "caret-down-square.svg", "caret-down.svg" ]
+
+    }
+  ]
+}
