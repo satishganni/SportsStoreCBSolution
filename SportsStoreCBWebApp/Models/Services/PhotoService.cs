@@ -1,13 +1,13 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using SportsStoreCBWebApp.Models.Abstract;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 
 namespace SportsStoreCBWebApp.Models.Services
@@ -26,7 +26,35 @@ namespace SportsStoreCBWebApp.Models.Services
 
     public async Task<string> UploadPhotoAsync(string category, IFormFile photoToUpload)
     {
-      return null;
+      if (photoToUpload == null || photoToUpload.Length == 0) return null;
+
+      string cateogryLowerCase = category.ToLower().Trim();
+      string fullPath = null;
+      try
+      {
+        CloudBlobContainer blobContainer = _blobClient.GetContainerReference(cateogryLowerCase);
+
+        if (await blobContainer.CreateIfNotExistsAsync())
+        {
+          await blobContainer.SetPermissionsAsync(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
+          _logger.LogInformation($"Successfully created Blob Storage Container '{blobContainer.Name}' and made it Public");
+        }
+
+        string imageName = $"productphoto{Guid.NewGuid().ToString()}{Path.GetExtension(photoToUpload.FileName.Substring(photoToUpload.FileName.LastIndexOf("/") + 1))}";
+
+        // Upload image to blob storage
+        CloudBlockBlob blockBlob = blobContainer.GetBlockBlobReference(imageName);
+        blockBlob.Properties.ContentType = photoToUpload.ContentType;
+        await blockBlob.UploadFromStreamAsync(photoToUpload.OpenReadStream());
+
+        fullPath = blockBlob.Uri.ToString();
+        _logger.LogInformation($"Blob Service, PhotoService.UploadPhoto, imagePath='{fullPath}'");
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, "Error Uploading the photo blob to storage");
+      }
+      return fullPath;
     }
 
     private async Task<bool> DeleteEmptyContainerAsync(CloudBlobContainer blobContainer)
@@ -42,7 +70,29 @@ namespace SportsStoreCBWebApp.Models.Services
     }
     public async Task<bool> DeletePhotoAsync(string category, string photoUrl)
     {
-      return false;
+      if (string.IsNullOrEmpty(photoUrl)) return true;
+      
+      string categoryLowerCase = category.ToLower().Trim();
+      bool deletedFlag = false;
+      try
+      {
+        CloudBlobContainer blobContainer = _blobClient.GetContainerReference(categoryLowerCase);
+
+        if (blobContainer.Name == categoryLowerCase)
+        {
+          string blobName = photoUrl.Substring(photoUrl.LastIndexOf("/") + 1);
+          CloudBlockBlob blockBlob = blobContainer.GetBlockBlobReference(blobName);
+          deletedFlag = await blockBlob.DeleteIfExistsAsync();
+        }
+        _logger.LogInformation($"Blob Service, PhotoService.DeletePhoto, deletedImagePath='{photoUrl}'");
+        await DeleteEmptyContainerAsync(blobContainer);
+        return deletedFlag;
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, "Error in deleting the photo blob from storage");
+        throw;
+      }
     }
 
     public async Task<string> CopyPhotoAsync(string oldCategory, string newCategory, string photoUrl)

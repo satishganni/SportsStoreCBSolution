@@ -31,8 +31,8 @@ namespace SportsStoreCBWebApp.Models
 
     public async Task<bool> CreateDatabaseAsync()
     {
-      //DatabaseResponse dbResponse = await _cosmosClient.CreateDatabaseIfNotExistsAsync(_databaseId, throughput: 400);
-      DatabaseResponse dbResponse = await _cosmosClient.CreateDatabaseIfNotExistsAsync(_databaseId);
+      //DatabaseResponse dbResponse = await _cosmosClient.CreateDatabaseIfNotExistsAsync(_databaseId, throughput: 400); (Fixed PostPaid Account)
+      DatabaseResponse dbResponse = await _cosmosClient.CreateDatabaseIfNotExistsAsync(_databaseId); //Serverless (Pay asy you use)
       if (dbResponse.StatusCode == System.Net.HttpStatusCode.Created)
       {
         _logger.LogInformation($"Database: '{_databaseId}' created successfully");
